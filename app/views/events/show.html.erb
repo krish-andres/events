@@ -10,6 +10,6 @@
 <p><%= @event.location %></p>
 
 <h3>Price:</h3>
-<p><%= number_to_currency(@event.price) %></p>
+<p><%= event_price(@event) %></p>
 
 <%= link_to "All Events", events_path %>
