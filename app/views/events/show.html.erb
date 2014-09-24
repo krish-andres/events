@@ -12,4 +12,8 @@
 <h3>Price:</h3>
 <p><%= event_price(@event) %></p>
 
-<%= link_to "All Events", events_path %>
+<nav>
+  <%= link_to "All Events", events_path %> ||
+  <%= link_to 'Edit', edit_event_path(@event) %> || 
+  <%= link_to 'Delete', @event, method: :delete, data: { confirm: 'Are you sure?' } %>
+</nav>
