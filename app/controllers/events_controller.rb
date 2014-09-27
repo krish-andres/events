@@ -2,7 +2,7 @@ class EventsController < ApplicationController
   before_action :set_event, except: [:index, :new, :create]
 
   def index
-    @events = Event.all
+    @events = Event.upcoming
   end
 
   def show
@@ -45,7 +45,7 @@ class EventsController < ApplicationController
   end
 
   def event_params
-    params.require(:event).permit(:name, :description, :starts_at, :location, :price)
+    params.require(:event).permit(:name, :description, :starts_at, :location, :price, :capacity, :image_file_name)
   end
 
 end

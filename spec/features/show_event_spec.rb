@@ -11,7 +11,8 @@ describe "Showing an event" do
     expect(page).to have_text(event.description)
     expect(page).to have_text(event.location)
     expect(page).to have_text(event.starts_at)
-    expect(page).to have_text("$20.00")
+    expect(page).to have_text(event.capacity)
+    expect(page).to have_selector("img[src$='#{event.image_file_name}']")
   end
 
   it "shows 'Free!' if the event costs $0" do

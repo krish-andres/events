@@ -1,13 +1,12 @@
 <header>
-  <h1><%= pluralize(@events.size, 'Event') %></h1>
+  <h1>Upcoming Events</h1>
 </header>
-
-<%= link_to "Add New Event", new_event_path %>
 
 <% @events.each do |event| %>
   <article>
-    <header>
-      <h1><%= link_to event.name, event %></h1>
+    <header class="event">
+      <%= image_for(event) %>
+      <h2><%= link_to event.name, event %></h2>
     </header>
     <p><%= event.description %></p>
     <table>
@@ -22,6 +21,10 @@
       <tr>
         <th>Price:</th>
         <td><%= event_price(event) %></td>
+      </tr>
+      <tr>
+        <th>Capacity:</th>
+        <td><%= event.capacity %></td>
       </tr>
     </table>
   </article>

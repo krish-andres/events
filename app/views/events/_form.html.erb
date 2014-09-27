@@ -20,6 +20,14 @@
     <%= f.number_field :price %>
   </p>
   <p>
+    <%= f.label :capacity %><br />
+    <%= f.number_field :capacity %>
+  </p>
+  <p>
+    <%= f.label :image_file_name %>
+    <%= f.text_field :image_file_name %>
+  </p>
+  <p>
     <%= f.submit %>
     <%= link_to 'Cancel', @event %>
   </p>

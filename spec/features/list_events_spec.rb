@@ -17,4 +17,12 @@ describe "Listing the Events" do
     expect(page).to have_text(event2.description)
     expect(page).to have_text(event2.starts_at)
   end
+
+  it "doesn't show an event in the past" do
+    event = Event.create!(event_attributes(starts_at: 20.days.ago))
+
+    visit events_path
+
+    expect(page).not_to have_text(event.name)
+  end
 end

@@ -1,5 +1,6 @@
 <header>
   <h1><%= @event.name %></h1>
+  <%= image_for(@event) %>
 </header>
 <p><%= @event.description %></p>
 
@@ -11,6 +12,9 @@
 
 <h3>Price:</h3>
 <p><%= event_price(@event) %></p>
+
+<h3>Capacity:</h3>
+<p><%= @event.capacity %></p>
 
 <nav>
   <%= link_to "All Events", events_path %> ||
