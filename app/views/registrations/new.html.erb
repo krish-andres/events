@@ -1,0 +1,24 @@
+<header>
+  <h1>New Registration for <%= link_to @event.name, @event %></h1>
+</header>
+
+<%= form_for [@event, @registration] do |f| %>
+  <div>
+    <%= render 'shared/errors', object: @registration %>
+  </div>
+  <p>
+    <%= f.label :name %>
+    <%= f.text_field :name, autofocus: true, size: 30 %>
+  </p>
+  <p>
+    <%= f.label :email %>
+    <%= f.email_field :email, size: 30 %>
+  </p>
+  <p>
+    <%= f.label :how_heard, 'How Heard' %>
+    <%= f.select :how_heard, Registration::HOW_HEARD_OPTIONS, prompt: "Select" %>
+  </p>
+  <p>
+    <%= f.submit 'Register!' %> | <%= link_to 'Cancel', @event %>
+  </p>
+<% end %>

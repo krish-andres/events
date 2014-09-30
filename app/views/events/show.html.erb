@@ -2,7 +2,9 @@
   <h1><%= @event.name %></h1>
   <%= image_for(@event) %>
 </header>
+<br />
 <p><%= @event.description %></p>
+<h4><%= link_to "Registrations", event_registrations_path(@event) %></h4>
 
 <h3>When:</h3>
 <p><%= @event.starts_at %></p>
@@ -16,7 +18,10 @@
 <h3>Capacity:</h3>
 <p><%= @event.capacity %></p>
 
-<nav>
-  <%= link_to 'Edit', edit_event_path(@event) %> || 
-  <%= link_to 'Delete', @event, method: :delete, data: { confirm: 'Are you sure?' } %>
-</nav>
+<footer>
+  <h4><%= register_link_for(@event) %></h4>
+  <nav>
+    <%= link_to 'Edit', edit_event_path(@event) %> || 
+    <%= link_to 'Delete', @event, method: :delete, data: { confirm: 'Are you sure?' } %>
+  </nav>
+</footer>

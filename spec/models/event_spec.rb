@@ -106,14 +106,6 @@ describe "An Event" do
     expect(event.errors[:capacity].any?).to eq(false)
   end
 
-  it "rejects a capacity of 0" do
-    event = Event.new(capacity: 0)
-
-    event.valid?
-
-    expect(event.errors[:capacity].any?).to eq(true)
-  end
-
   it "rejects a negative capacity" do
     event = Event.new(capacity: -20)
 
@@ -163,5 +155,26 @@ describe "An Event" do
     expect { 
       event.destroy
     }.to change(Event, :count).by(-1)
+  end
+
+  it "is sold out if no spots are left" do
+    event = Event.new(event_attributes(capacity: 0))
+
+    expect(event.sold_out?).to be_true
+  end
+
+  it "is not sold out if spots are available" do
+    event = Event.new(event_attributes(capacity: 10))
+
+    expect(event.sold_out?).to be_false
+  end
+
+  it "decrements spots left when a registration is created" do
+    event = Event.create!(event_attributes)
+    event.registrations.create!(registration_attributes)
+
+    expect { 
+      event.registrations.create(registration_attributes)
+    }.to change(event, :spots_left).by(-1)
   end
 end
