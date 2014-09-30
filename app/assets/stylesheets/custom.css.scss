@@ -65,5 +65,19 @@ p {
 aside#sidebar { 
   float: right; 
   width: 200px; 
-  background: #ecf0f1;
+  margin-top: 50px;
+  padding-right: 250px;
+
+  nav { 
+    ul {
+      margin: 0; 
+      padding: 0; 
+      list-style: none; 
+    }
+    li {
+      padding: 2px 0; 
+      border-radius: 10px;
+      border: 1px solid #ecf0f1;
+    }
+  }
 }

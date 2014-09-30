@@ -4,11 +4,10 @@ describe "Listing the Events" do
   
   it "shows the events" do
     event1 = Event.create!(event_attributes)
-    event2 = Event.create!(name: "Eventastic!", location: "Dallas, TX", price: 20.00, description: "A fantastic event indeed! Two thumbs up!", starts_at: 10.days.from_now) 
+    event2 = Event.create!(name: "Eventastic!", location: "Dallas, TX", price: 20.00, description: "A fantastic event indeed! Two thumbs up!", starts_at: 10.days.from_now, capacity: 20)
 
     visit events_url
 
-    expect(page).to have_text("2 Events")
     expect(page).to have_text(event1.name)
     expect(page).to have_text(event2.name)
 

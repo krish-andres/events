@@ -14,12 +14,22 @@ describe "Creating an event" do
     fill_in 'Location', with: "Denver, CO"
     fill_in 'Price', with: "20.00"
     select (Time.now.year + 1).to_s, from: "event_starts_at_1i"
-    fill_in 'Event Capacity', with: '75'
-    fill_in 'Event Image File Name', with: 'event.png'
+    fill_in 'Capacity', with: '75'
+    fill_in 'Image file name', with: 'event.png'
 
     click_button 'Create Event'
     
     expect(current_path).to eq(event_path(Event.last))
     expect(page).to have_text("New Event")
+  end
+
+  it "cannot create an event with invalid data" do
+    visit new_event_url
+
+    expect {
+      click_button 'Create Event'
+    }.not_to change(Event, :count)
+
+   expect(page).to have_text('error') 
   end
 end

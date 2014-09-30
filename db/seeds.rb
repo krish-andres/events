@@ -27,7 +27,7 @@ Event.create!([
     name: "InsomniVent", 
     description: "Have trouble sleeping? Attend the world's best event for insomniacs!", 
     location: "Seattle, WA", 
-    starts_at: 2.days.from_now, 
+    starts_at: 80.days.from_now, 
     price: 10.00, 
     capacity: 200
   }, 
