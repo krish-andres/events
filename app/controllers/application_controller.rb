@@ -8,4 +8,16 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_user
 
+  def require_signin
+    unless current_user
+      session[:intended_url] = request.url
+      redirect_to signin_url, notice: "Please sign in first!"
+    end
+  end
+
+  def current_user?(user)
+    current_user == user
+  end
+  helper_method :current_user?
+
 end
