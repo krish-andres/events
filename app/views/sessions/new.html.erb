@@ -1,0 +1,19 @@
+<header>
+  <h1>Sign In</h1>
+</header>
+
+<%= form_tag :session do %>
+  <p>
+    <%= label_tag :email %>
+    <%= email_field_tag :email, nil, autofocus: true %>
+  </p>
+  <p>
+    <%= label_tag :password %>
+    <%= password_field_tag :password, nil %>
+  </p>
+  <p>
+    <%= submit_tag 'Sign In' %>
+  </p>
+<% end %>
+
+<p>Don't have an account yet? <%= link_to 'Sign Up!', signup_path %></p>
