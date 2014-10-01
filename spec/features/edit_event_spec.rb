@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe "Editing an event" do
+  before do
+    admin = User.create!(user_attributes(admin: true))
+    sign_in(admin)
+  end
   
   it "updates the event and shows the event's updated details" do
     event = Event.create!(event_attributes)

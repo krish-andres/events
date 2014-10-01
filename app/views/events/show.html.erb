@@ -20,8 +20,10 @@
 
 <footer>
   <h4><%= register_link_for(@event) %></h4>
-  <nav>
-    <%= link_to 'Edit', edit_event_path(@event) %> || 
-    <%= link_to 'Delete', @event, method: :delete, data: { confirm: 'Are you sure?' } %>
-  </nav>
+  <% if current_user_admin? %>
+    <nav>
+      <%= link_to 'Edit', edit_event_path(@event) %> || 
+      <%= link_to 'Delete', @event, method: :delete, data: { confirm: 'Are you sure?' } %>
+    </nav>
+  <% end %>
 </footer>
