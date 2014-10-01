@@ -16,3 +16,13 @@ def registration_attributes(overrides = {})
     how_heard: "Twitter"
   }.merge(overrides)
 end
+
+def user_attributes(overrides = {})
+  {
+    name: "Example User", 
+    username: "exampleuser", 
+    email: "user@example.com", 
+    password: "foobar", 
+    password_confirmation: "foobar"
+  }.merge(overrides)
+end

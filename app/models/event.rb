@@ -7,7 +7,7 @@ class Event < ActiveRecord::Base
   validates :starts_at, presence: true
   validates :description, presence: true, length: { maximum: 500 }
   validates :price, numericality: { greater_than_or_equal_to: 0 } 
-  validates :capacity, presence: true, numericality: { greater_than: 0 }
+  validates :capacity, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :image_file_name, allow_blank: true, format: { 
     with: /\w+\.(gif|jpg|png)\z/i, 
     message: "must reference a GIF, JPG, or PNG image" 

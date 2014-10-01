@@ -1,0 +1,32 @@
+<%= form_for @user do |f| %>
+  <div>
+    <%= render 'shared/errors', object: @user %>
+  </div>
+  <p>
+    <%= f.label :username %>
+    <%= f.text_field :username %>
+  </p>
+  <p>
+    <%= f.label :name %>
+    <%= f.text_field :name, autofocus: true %>
+  </p>
+  <p>
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+  </p>
+  <p>
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </p>
+  <p>
+    <%= f.label :password_confirmation, 'Password Confirmation' %>
+    <%= f.password_field :password_confirmation %>
+  </p>
+  <p>
+    <% unless @user.new_record? %>
+      <%= f.submit 'Update Account' %>
+    <% else %>
+      <%= f.submit 'Create Account' %>
+    <% end %>
+  </p>
+<% end %>
