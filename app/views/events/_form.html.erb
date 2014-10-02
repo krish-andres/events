@@ -31,6 +31,9 @@
     <%= f.text_field :image_file_name %>
   </p>
   <p>
+    <%= f.collection_check_boxes :category_ids, Category.all, :id, :name %>
+  </p>
+  <p>
     <%= f.submit %>
     <%= link_to 'Cancel', @event %>
   </p>

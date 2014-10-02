@@ -3,6 +3,8 @@ class Event < ActiveRecord::Base
   has_many :registrations, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :likers, through: :likes, source: :user
+  has_many :characterizations, dependent: :destroy
+  has_many :categories, through: :characterizations
 
   validates :name, presence: true
   validates :location, presence: true

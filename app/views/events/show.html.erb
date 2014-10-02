@@ -44,3 +44,12 @@
     <% end %>
   </ul>
 <% end %>
+
+<% if @categories.any? %>
+  <h4>Categories</h4>
+  <ul>
+    <% @categories.each do |category| %>
+      <li><%= category.name %></li>
+    <% end %>
+  </ul>
+<% end %>
