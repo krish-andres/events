@@ -6,10 +6,28 @@
   <%= profile_image_for(@user) %>
   <h4><%= @user.name %></h4>
 </div>
+<br />
+
+<h4>Registered Events</h4>
+<ul>
+  <% @registrations.each do |r| %>
+    <li><%= link_to r.event.name, r.event %></li>
+  <% end %>
+</ul>
 
 <% if current_user?(@user) %>
   <nav>
     <%= link_to 'Edit Account', edit_user_path(@user) %> | 
     <%= link_to 'Delete Account', @user, method: :delete, data: { confirm: 'Are you sure?' } %>
   </nav>
+<% end %>
+<br />
+
+<% if @liked_events.any? %>
+  <h4>Liked Events</h4>
+  <ul>
+    <% @liked_events.each do |event| %>
+      <li><%= link_to event.name, event %></li>
+    <% end %>
+  </ul>
 <% end %>

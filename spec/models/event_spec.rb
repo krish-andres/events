@@ -177,4 +177,16 @@ describe "An Event" do
       event.registrations.create(registration_attributes)
     }.to change(event, :spots_left).by(-1)
   end
+
+  it "has likers" do
+    event = Event.new(event_attributes)
+    liker1 = User.new(user_attributes(username: "liker1", email: "liker1@example.com"))
+    liker2 = User.new(user_attributes(username: "liker2", email: "liker2@example.com"))
+
+    event.likes.new(user: liker1)
+    event.likes.new(user: liker2)
+
+    expect(event.likers).to include(liker1)
+    expect(event.likers).to include(liker2)
+  end
 end

@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-
   get '/signin' => "sessions#new"
   resource :session, only: [:new, :create, :destroy]
 
@@ -10,6 +9,7 @@ Rails.application.routes.draw do
   root 'events#index'
   resources :events do
     resources :registrations
+    resources :likes
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

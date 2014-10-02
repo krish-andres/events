@@ -11,8 +11,6 @@ end
 
 def registration_attributes(overrides = {})
   { 
-    name: "Example Name", 
-    email: "user@example.com", 
     how_heard: "Twitter"
   }.merge(overrides)
 end

@@ -1,5 +1,8 @@
 class User < ActiveRecord::Base
   has_secure_password
+  has_many :registrations, dependent: :destroy
+  has_many :likes, dependent: :destroy
+  has_many :liked_events, through: :likes, source: :event
 
   validates :name, presence: true
   validates :username, presence: true, uniqueness: { case_sensitive: false }

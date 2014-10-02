@@ -7,14 +7,6 @@
     <%= render 'shared/errors', object: @registration %>
   </div>
   <p>
-    <%= f.label :name %>
-    <%= f.text_field :name, autofocus: true, size: 30 %>
-  </p>
-  <p>
-    <%= f.label :email %>
-    <%= f.email_field :email, size: 30 %>
-  </p>
-  <p>
     <%= f.label :how_heard, 'How Heard' %>
     <%= f.select :how_heard, Registration::HOW_HEARD_OPTIONS, prompt: "Select" %>
   </p>

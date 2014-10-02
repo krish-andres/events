@@ -5,7 +5,8 @@
 <ol>
   <% @registrations.each do |r| %>
     <li>
-      <%= mail_to(r.email, r.name) %>
+      <%= profile_image_for(r.user, size: 35) %>
+      <p><%= link_to r.user.username, r.user %></p>
       <span><%= time_ago_in_words(r.created_at) %> ago</span>
       (<%= r.how_heard %>)
     </li>

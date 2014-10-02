@@ -111,6 +111,35 @@ describe "A User" do
 
     expect(user.password_digest.present?).to eq(true)
   end
+
+  it "has registrations" do
+    user = User.new(user_attributes)
+    event1 = Event.new(event_attributes(name: "Event 1"))
+    event2 = Event.new(event_attributes(name: "Event 2"))
+
+    registration1 = event1.registrations.new(how_heard: "Twitter")
+    registration1.user = user
+    registration1.save!
+
+    registration2 = event2.registrations.new(how_heard: "Blog Post")
+    registration2.user = user
+    registration2.save!
+
+    expect(user.registrations).to include(registration1)
+    expect(user.registrations).to include(registration2)
+  end
+
+  it "has liked events" do
+    user = User.new(user_attributes)
+    event1 = Event.new(event_attributes(name: "Event 1"))
+    event2 = Event.new(event_attributes(name: "Event 2"))
+
+    user.likes.new(event: event1)
+    user.likes.new(event: event2)
+
+    expect(user.liked_events).to include(event1)
+    expect(user.liked_events).to include(event2)
+  end
 end
 
 describe "Authenticate" do

@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe "Creating a registration" do
+  before do
+    @user = User.create!(user_attributes)
+    sign_in(@user)
+  end
   
   it "saves the registration" do
     event = Event.create!(event_attributes)
@@ -10,12 +14,11 @@ describe "Creating a registration" do
 
     expect(current_path).to eq(new_event_registration_path(event))
 
-    fill_in 'Name', with: "Example User"
-    fill_in 'Email', with: "user@example.com"
     select "Twitter", from: "registration_how_heard"
 
     click_button 'Register!'
     expect(current_path).to eq(event_registrations_path(event))
+    expect(page).to have_text(@user.username)
   end
 
   it "does not save the review if it's invalid" do

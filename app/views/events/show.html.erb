@@ -3,6 +3,14 @@
   <%= image_for(@event) %>
 </header>
 <br />
+
+<% if current_user %>
+  <% unless @current_like %>
+    <%= button_to 'Like', event_likes_path(@event) %>
+  <% else %>
+    <%= button_to 'Unlike', event_like_path(@event, @current_like), method: :delete %>
+  <% end %>
+<% end %>
 <p><%= @event.description %></p>
 <h4><%= link_to "Registrations", event_registrations_path(@event) %></h4>
 
@@ -27,3 +35,12 @@
     </nav>
   <% end %>
 </footer>
+
+<% if @likers.any? %>
+  <h4>Likers</h4>
+  <ul>
+    <% @likers.each do |liker| %>
+      <li><%= link_to liker.username, liker %></li>
+    <% end %>
+  </ul>
+<% end %>
