@@ -19,25 +19,25 @@ describe UsersController do
     end
     
     it "cannot access show" do
-      get :show, id: @user.id
+      get :show, id: @user
       
       expect(response).to redirect_to(signin_url)
     end
     
     it "cannot access edit" do
-      get :edit, id: @user.id
+      get :edit, id: @user
       
       expect(response).to redirect_to(signin_url)
     end
     
     it "cannot access update" do
-      patch :update, id: @user.id
+      patch :update, id: @user
       
       expect(response).to redirect_to(signin_url)
     end
     
     it "cannot access destroy" do
-      delete :destroy, id: @user.id
+      delete :destroy, id: @user
       
       expect(response).to redirect_to(signin_url)
     end
@@ -48,23 +48,23 @@ describe UsersController do
     
     before do
       @wrong_user = User.create!(user_attributes(username: "wrong", email: "wrong@example.com"))
-      session[:user_id] = @wrong_user.id
+      session[:user_id] = @wrong_user
     end
     
     it "cannot edit another user" do
-      get :edit, id: @user.id
+      get :edit, id: @user
       
       expect(response).to redirect_to(root_url)
     end
     
     it "cannot update another user" do
-      patch :update, id: @user.id
+      patch :update, id: @user
       
       expect(response).to redirect_to(root_url)
     end
     
     it "cannot destroy another user" do
-      delete :destroy, id: @user.id
+      delete :destroy, id: @user
       
       expect(response).to redirect_to(root_url)
     end

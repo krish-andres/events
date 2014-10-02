@@ -140,6 +140,20 @@ describe "A User" do
     expect(user.liked_events).to include(event1)
     expect(user.liked_events).to include(event2)
   end
+
+  it "generates a slug when it's created" do
+    user = User.create!(user_attributes(username: "phoenix", email: "user@example.com"))
+
+    expect(user.slug).to eq("phoenix")
+  end
+
+  it "requires a unique slug" do
+    user1 = User.create!(user_attributes)
+    user2 = User.new(slug: user1.slug)
+
+    user2.valid?
+    expect(user2.errors[:slug].first).to eq("has already been taken")
+  end
 end
 
 describe "Authenticate" do

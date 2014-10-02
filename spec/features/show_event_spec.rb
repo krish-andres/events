@@ -53,4 +53,12 @@ describe "Showing an event" do
 
     expect(page).to have_title("Events - #{event.name}")
   end
+
+  it "has an SEO-friendly URL" do
+    event = Event.create!(event_attributes(name: "An Exciting Event"))
+
+    visit event_url(event)
+
+    expect(current_path).to eq("/events/an-exciting-event")
+  end
 end

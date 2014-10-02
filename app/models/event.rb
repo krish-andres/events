@@ -6,7 +6,8 @@ class Event < ActiveRecord::Base
   has_many :characterizations, dependent: :destroy
   has_many :categories, through: :characterizations
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
+  validates :slug, uniqueness: true
   validates :location, presence: true
   validates :starts_at, presence: true
   validates :description, presence: true, length: { maximum: 500 }
@@ -16,12 +17,12 @@ class Event < ActiveRecord::Base
     with: /\w+\.(gif|jpg|png)\z/i, 
     message: "must reference a GIF, JPG, or PNG image" 
   }
+  before_validation :generate_slug
 
   scope :upcoming, -> { where('starts_at >= ?', Time.now).order("starts_at ASC") }
   scope :past, -> { where('starts_at < ?', Time.now).order("starts_at DESC") }
   scope :free, -> { upcoming.where(price: 0.00) }
   scope :recently_added, ->(max=5) { where('starts_at >= ?', Time.now).order("created_at DESC").limit(max) }
-
 
   def free?
     price.blank? || price.zero?
@@ -37,5 +38,13 @@ class Event < ActiveRecord::Base
 
   def sold_out?
     spots_left.zero?
+  end
+
+  def to_param
+    slug
+  end
+
+  def generate_slug
+    self.slug ||= name.parameterize if name
   end
 end

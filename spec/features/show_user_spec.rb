@@ -35,4 +35,13 @@ describe "Showing a user" do
 
     expect(page).to have_title("Events - #{user.username}")
   end
+
+  it "has an SEO-friendly URL" do
+    user = User.create!(user_attributes(username: "phoenix", email: "user@example.com"))
+    
+    sign_in(user)
+    visit user_url(user)
+
+    expect(current_path).to eq("/users/phoenix")
+  end
 end

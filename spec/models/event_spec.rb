@@ -193,9 +193,9 @@ describe "An Event" do
     end
       
     it "list upcoming events by date, with the soonest event(s) first" do
-      event1 = Event.create!(event_attributes(starts_at: 10.days.from_now))
-      event2 = Event.create!(event_attributes(starts_at: 20.days.from_now))
-      event3 = Event.create!(event_attributes(starts_at: 40.days.from_now))
+      event1 = Event.create!(event_attributes(name: "Event 1", starts_at: 10.days.from_now))
+      event2 = Event.create!(event_attributes(name: "Event 2", starts_at: 20.days.from_now))
+      event3 = Event.create!(event_attributes(name: "Event 3", starts_at: 40.days.from_now))
 
       expect(Event.upcoming).to eq([event1, event2, event3])
     end
@@ -216,9 +216,9 @@ describe "An Event" do
     end
 
     it "list past events by date, with the most recent event(s) first" do
-      event1 = Event.create!(event_attributes(starts_at: 10.days.ago))
-      event2 = Event.create!(event_attributes(starts_at: 20.days.ago))
-      event3 = Event.create!(event_attributes(starts_at: 40.days.ago))
+      event1 = Event.create!(event_attributes(name: "Event 1", starts_at: 10.days.ago))
+      event2 = Event.create!(event_attributes(name: "Event 2", starts_at: 20.days.ago))
+      event3 = Event.create!(event_attributes(name: "Event 3", starts_at: 40.days.ago))
 
       expect(Event.past).to eq([event1, event2, event3])
     end
@@ -242,5 +242,27 @@ describe "An Event" do
     end
   end
 
+  it "generates a slug when it's created" do
+    event = Event.create!(event_attributes(name: "An Exciting Event"))
+
+    expect(event.slug).to eq("an-exciting-event")
+  end
+
+  it "requires a unique name" do
+    event1 = Event.create!(event_attributes)
+    event2 = Event.new(name: event1.name)
+
+    event2.valid?
+    expect(event2.errors[:name].first).to eq("has already been taken")
+  end
+
+  it "requires a unique slug" do
+    event1 = Event.create!(event_attributes)
+    event2 = Event.new(slug: event1.slug)
+
+    event2.valid?
+    expect(event2.errors[:slug].first).to eq("has already been taken")
+  end
 end
+
 
