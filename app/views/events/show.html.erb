@@ -1,3 +1,4 @@
+<% content_for :title, @event.name %>
 <header>
   <h1><%= @event.name %></h1>
   <%= image_for(@event) %>
@@ -36,20 +37,22 @@
   <% end %>
 </footer>
 
-<% if @likers.any? %>
-  <h4>Likers</h4>
-  <ul>
-    <% @likers.each do |liker| %>
-      <li><%= link_to liker.username, liker %></li>
-    <% end %>
-  </ul>
-<% end %>
+<% content_for :side do %>
+  <% if @likers.any? %>
+    <h4>Likers</h4>
+    <ul>
+      <% @likers.each do |liker| %>
+        <li><%= link_to liker.username, liker %></li>
+      <% end %>
+    </ul>
+  <% end %>
 
-<% if @categories.any? %>
-  <h4>Categories</h4>
-  <ul>
-    <% @categories.each do |category| %>
-      <li><%= category.name %></li>
-    <% end %>
-  </ul>
+  <% if @categories.any? %>
+    <h4>Categories</h4>
+    <ul>
+      <% @categories.each do |category| %>
+        <li><%= category.name %></li>
+      <% end %>
+    </ul>
+  <% end %>
 <% end %>

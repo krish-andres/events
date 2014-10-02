@@ -1,3 +1,4 @@
+<% content_for :title, @user.username %>
 <header>
   <h1><%= @user.username %></h1>
 </header>
@@ -23,11 +24,13 @@
 <% end %>
 <br />
 
-<% if @liked_events.any? %>
-  <h4>Liked Events</h4>
-  <ul>
-    <% @liked_events.each do |event| %>
-      <li><%= link_to event.name, event %></li>
-    <% end %>
-  </ul>
+<% content_for :side do %>
+  <% if @liked_events.any? %>
+    <h4>Liked Events</h4>
+    <ul>
+      <% @liked_events.each do |event| %>
+        <li><%= link_to event.name, event %></li>
+      <% end %>
+    </ul>
+  <% end %>
 <% end %>

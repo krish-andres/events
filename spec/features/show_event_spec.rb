@@ -30,4 +30,27 @@ describe "Showing an event" do
     
     expect(page).to have_text("$20.00")
   end
+
+  it "shows the event's likers and categories in the sidebar" do
+    event = Event.create!(event_attributes)
+    user = User.create!(user_attributes)
+    event.likers << user
+
+    category = Category.create!(name: "Category 1")
+    event.categories << category
+
+    visit event_url(event)
+    within("aside#sidebar") do
+      expect(page).to have_text(user.username)
+      expect(page).to have_text(category.name)
+    end
+  end
+
+  it "includes the event's title in the page title" do
+    event = Event.create!(event_attributes)
+
+    visit event_url(event)
+
+    expect(page).to have_title("Events - #{event.name}")
+  end
 end
