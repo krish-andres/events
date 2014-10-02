@@ -6,7 +6,7 @@ describe "Navigating Events" do
     event = Event.create!(event_attributes)
 
     visit event_url(event)
-    click_link 'All Events'
+    click_link 'Upcoming'
 
     expect(current_path).to eq(events_path)
   end

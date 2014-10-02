@@ -20,7 +20,7 @@ class Event < ActiveRecord::Base
   scope :upcoming, -> { where('starts_at >= ?', Time.now).order("starts_at ASC") }
   scope :past, -> { where('starts_at < ?', Time.now).order("starts_at DESC") }
   scope :free, -> { upcoming.where(price: 0.00) }
-  scope :recently_added, ->(max=5) { order("created_at DESC").limit(max) }
+  scope :recently_added, ->(max=5) { where('starts_at >= ?', Time.now).order("created_at DESC").limit(max) }
 
 
   def free?

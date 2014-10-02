@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get '/signup' => "users#new"
   resources :users
 
+  get 'events/:scope' => "events#index", constraints: { scope: /past|free|recently_added/ }, as: :filtered_events
+
   root 'events#index'
   resources :events do
     resources :registrations

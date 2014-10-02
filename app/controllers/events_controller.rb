@@ -4,7 +4,16 @@ class EventsController < ApplicationController
   before_action :set_event, except: [:index, :new, :create]
 
   def index
-    @events = Event.upcoming
+    case params[:scope]
+    when 'past'
+      @events = Event.past
+    when 'free'
+      @events = Event.free
+    when 'recently_added'
+      @events = Event.recently_added
+    else
+      @events = Event.upcoming
+    end
   end
 
   def show
