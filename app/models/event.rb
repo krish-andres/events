@@ -17,13 +17,14 @@ class Event < ActiveRecord::Base
     message: "must reference a GIF, JPG, or PNG image" 
   }
 
+  scope :upcoming, -> { where('starts_at >= ?', Time.now).order("starts_at ASC") }
+  scope :past, -> { where('starts_at < ?', Time.now).order("starts_at DESC") }
+  scope :free, -> { upcoming.where(price: 0.00) }
+  scope :recently_added, ->(max=5) { order("created_at DESC").limit(max) }
+
 
   def free?
     price.blank? || price.zero?
-  end
-
-  def self.upcoming
-    where('starts_at >= ?', Time.now).order("starts_at ASC")
   end
 
   def spots_left

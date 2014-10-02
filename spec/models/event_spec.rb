@@ -2,38 +2,6 @@ require 'spec_helper'
 
 describe "An Event" do
   
-  it "is free is the price is $0" do
-    event = Event.new(price: 0.00)
-
-    expect(event.free?).to eq(true)
-  end
-
-  it "is not free is the price is more than $0" do
-    event = Event.new(price: 20.00)
-
-    expect(event.free?).to eq(false)
-  end
-
-  it "isn't upcoming if the event occured in the past" do
-    event = Event.create!(event_attributes(starts_at: 10.days.ago))
-
-    expect(Event.upcoming).not_to include(event)
-  end
-
-  it "is upcoming if the event occurs in the future" do
-    event = Event.create!(event_attributes(starts_at: 10.days.from_now))
-
-    expect(Event.upcoming).to include(event)
-  end
-
-  it "list the events by date, with the soonest event(s) first" do
-    event1 = Event.create!(event_attributes(starts_at: 10.days.from_now))
-    event2 = Event.create!(event_attributes(starts_at: 20.days.from_now))
-    event3 = Event.create!(event_attributes(starts_at: 40.days.from_now))
-
-    expect(Event.upcoming).to eq([event1, event2, event3])
-  end
-
   it "requires a name" do
     event = Event.new(name: "")
     
@@ -189,4 +157,90 @@ describe "An Event" do
     expect(event.likers).to include(liker1)
     expect(event.likers).to include(liker2)
   end
+
+  context "free query" do
+    it "returns upcoming free events" do
+      event = Event.create!(event_attributes(starts_at: 3.months.from_now, price: 0.00))
+
+      expect(Event.free).to include(event)
+    end
+
+    it "does not return upcoming non-free events" do
+      event = Event.create!(event_attributes(starts_at: 3.months.from_now, price: 20.00))
+
+      expect(Event.free).not_to include(event)
+    end
+
+    it "does not return past free events" do
+      event = Event.create!(event_attributes(starts_at: 3.months.ago, price: 0.00))
+
+      expect(Event.free).not_to include(event)
+    end
+  end
+
+  context "upcoming query" do
+    
+    it "returns the events with a start date in the future" do
+      event = Event.create!(event_attributes(starts_at: 3.months.from_now))
+      
+      expect(Event.upcoming).to include(event)
+    end
+
+    it "does not return the events with a start date in the past" do
+      event = Event.create!(event_attributes(starts_at: 3.months.ago))
+      
+      expect(Event.upcoming).not_to include(event)
+    end
+      
+    it "list upcoming events by date, with the soonest event(s) first" do
+      event1 = Event.create!(event_attributes(starts_at: 10.days.from_now))
+      event2 = Event.create!(event_attributes(starts_at: 20.days.from_now))
+      event3 = Event.create!(event_attributes(starts_at: 40.days.from_now))
+
+      expect(Event.upcoming).to eq([event1, event2, event3])
+    end
+
+  end
+
+  context "past query" do
+    it "returns events that occurred in the past"  do
+      event = Event.create!(event_attributes(starts_at: 3.months.ago))
+
+      expect(Event.past).to include(event)
+    end
+
+    it "does not return events that occur in the future" do
+      event = Event.create!(event_attributes(starts_at: 3.months.from_now))
+
+      expect(Event.past).not_to include(event)
+    end
+
+    it "list past events by date, with the most recent event(s) first" do
+      event1 = Event.create!(event_attributes(starts_at: 10.days.ago))
+      event2 = Event.create!(event_attributes(starts_at: 20.days.ago))
+      event3 = Event.create!(event_attributes(starts_at: 40.days.ago))
+
+      expect(Event.past).to eq([event1, event2, event3])
+    end
+  end
+
+  context "recently added query" do
+    before do
+      @event1 = Event.create!(event_attributes(name: "Event 1", created_at: 3.months.ago))
+      @event2 = Event.create!(event_attributes(name: "Event 2", created_at: 2.months.ago))
+      @event3 = Event.create!(event_attributes(name: "Event 3", created_at: 1.months.ago))
+      @event4 = Event.create!(event_attributes(name: "Event 4", created_at: 1.week.ago))
+      @event5 = Event.create!(event_attributes(name: "Event 5", created_at: 1.day.ago))
+    end
+
+    it "returns a specified number of events ordered with the most recently added event first" do
+      expect(Event.recently_added(2)).to eq([@event5, @event4])
+    end
+
+    it "returns a default number of 5 events ordered with the most recently added event first" do
+      expect(Event.recently_added).to eq([@event5, @event4, @event3, @event2, @event1])
+    end
+  end
+
 end
+
